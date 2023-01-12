@@ -1,0 +1,99 @@
+{
+  "name": "nh-vsc-focused",
+  "displayName": "Focused",
+  "description": "Focus on your project",
+  "version": "0.0.1",
+  "license": "MIT",
+  "keywords": [
+    "focus",
+    "productivity",
+    "file explorer"
+  ],
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:focusedTreeView"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "views": {
+			"explorer": [
+				{
+					"id": "nh-vsc-focused.views.focusedView",
+					"name": "Focused"
+				}
+			]
+		},
+    "commands": [
+			{
+				"command": "nh-vsc-focused.refresh",
+				"title": "Focused: Refresh",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "nh-vsc-focused.focusFolder",
+				"title": "Focused: Focus Folder"
+			},
+			{
+				"command": "nh-vsc-focused.unfocusFolder",
+				"title": "Focused: Unfocus Folder"
+			}
+		],
+    "menus": {
+			"view/title": [
+				{
+					"command": "nh-vsc-focused.refresh",
+					"when": "view == nh-vsc-focused.views.focusedView",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "nh-vsc-focused.unfocusFolder",
+					"when": "view == nh-vsc-focused.views.focusedView && viewItem == focusedBaseFolder"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "nh-vsc-focused.focusFolder",
+					"when": "explorerResourceIsFolder"
+				}
+			]
+		},
+    "configuration": {
+      "title": "Focused",
+      "properties": {
+        "nh-vsc-focused.rememberLastFocused": {
+          "type": "boolean",
+          "default": false,
+          "description": "Remember focused folder from the last selection"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "ts-node test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.73.0",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.3",
+    "@vscode/test-electron": "^2.2.0"
+  }
+}
